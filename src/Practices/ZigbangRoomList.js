@@ -22,7 +22,7 @@ export default class ZigbangRoomList extends React.Component {
   }
 
   componentDidMount = () => {
-    fakeAPIResponsePromise(1000)
+    fakeAPIResponsePromise(0)
       .then((data) => {
         console.log('API fetch has succeeded!');
         console.log(data)
@@ -51,13 +51,23 @@ export default class ZigbangRoomList extends React.Component {
     }
     return (
       <div className="ui container">
+
+        <button className="ui right labeled icon button">
+          <i className="chevron down icon"></i>
+          보증금 순으로 정렬
+        </button>
+        <button className="ui right labeled icon button">
+          <i className="chevron down icon"></i>
+          월세 순으로 정렬
+        </button>
+
+        <div className="ui hidden divider" />
+        <div className="ui hidden divider" />
+
         <div className="ui cards">
           {this.state.roomList.map((room) => {
             return (
               <div className="card">
-                <div className="image">
-                  <img src={room.item.images[0].url} />
-                </div>
                 <div className="content">
                   <div className="header">
                     {room.item.title}
