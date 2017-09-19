@@ -75,6 +75,14 @@ export default class ZigbangRoomList extends React.Component {
   }
 
   render() {
+    let answerOne;
+    let answerTwo;
+    let answerThree;
+
+    console.log(`가장 보증금이 비싼 방의 주소는: ${answerOne}`);
+    console.log(`agent_no가 26002인 사람이 올린 매물(방)의 개수: ${answerTwo}`);
+    console.log(`모든 방의 조회수의 합은: ${answerThree}`);
+
     if (this.state.isLoading) {
       return (
         <div className="ui container">
@@ -115,7 +123,10 @@ export default class ZigbangRoomList extends React.Component {
         <div className="ui cards">
           {this.state.roomList.map((room) => {
             return (
-              <div className="card">
+              <div
+                className="card"
+                key={room.item.id}
+              >
                 <div className="content">
                   <div className="header">
                     {room.item.title}
