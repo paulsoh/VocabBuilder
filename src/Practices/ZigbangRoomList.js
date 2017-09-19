@@ -1,5 +1,7 @@
 import React from 'react'
 import zigbangData from './zigbangData';
+import sortBy from 'lodash/sortBy';
+
 
 const fakeAPIResponsePromise = (timeToResponse) => new Promise((resolve, reject) => {
   const randomSeed = Math.random();
@@ -18,6 +20,27 @@ export default class ZigbangRoomList extends React.Component {
     this.state = {
       isLoading: true,
       roomList: [],
+      appliedFilter: 'rent', // 'deposit'
+    }
+  }
+
+  changeAppliedFilter = (filterType) => {
+    this.setState({
+      appliedFilter: filterType,
+    })
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.appliedFilter !== this.state.appliedFilter) {
+      if (this.state.appliedFilter === 'rent') {
+        this.setState({
+          roomList: sortBy(this.state.roomList, (room) => room.item.rent).reverse(),
+        })
+      } else if (this.state.appliedFilter === 'deposit') {
+        this.setState({
+          roomList: sortBy(this.state.roomList, (room) => room.item.deposit).reverse(),
+        })
+      }
     }
   }
 
@@ -52,11 +75,17 @@ export default class ZigbangRoomList extends React.Component {
     return (
       <div className="ui container">
 
-        <button className="ui right labeled icon button">
+        <button
+          className="ui right labeled icon button"
+          onClick={() => this.changeAppliedFilter('deposit')}
+        >
           <i className="chevron down icon"></i>
           보증금 순으로 정렬
         </button>
-        <button className="ui right labeled icon button">
+        <button
+          className="ui right labeled icon button"
+          onClick={() => this.changeAppliedFilter('rent')}
+        >
           <i className="chevron down icon"></i>
           월세 순으로 정렬
         </button>
