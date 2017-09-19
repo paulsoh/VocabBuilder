@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter,
+  Route,
+} from 'react-router-dom';
+import 'semantic-ui/dist/semantic.css';
 import WordLists from './Pages/WordLists';
 import WordList from './Pages/WordList';
 import Quizes from './Pages/Quizes';
 import QuizSession from './Pages/QuizSession';
-import {
-  BrowserRouter,
-  Link,
-  Route,
-} from 'react-router-dom';
-import 'semantic-ui/dist/semantic.css';
+import HeaderItem from './Components/HeaderItem';
+import ZigbangRoomList from './Practices/ZigbangRoomList';
+
+const routes = [
+  {
+    linkLabel: 'Word Lists',
+    linkTo: '/word-list',
+  },
+  {
+    linkLabel: 'Take a Quiz',
+    linkTo: '/quizes',
+  },
+  {
+    linkLabel: '직방 리스트',
+    linkTo: '/zigbangroomlist',
+  },
+]
 
 class App extends Component {
   constructor(props) {
     super(props);
-
   }
 
   render() {
@@ -22,18 +37,11 @@ class App extends Component {
         <div>
           <div className="ui attached stackable menu">
             <div className="ui container">
-              <Link to="/word-list">
-                <a className="item">
-                  <i className="home icon"></i> Word Lists
-                </a>
-              </Link>
-              <Link to="/quizes">
-                <a
-                  className="item"
-                >
-                  <i className="tasks icon"></i> Quiz
-                </a>
-              </Link>
+              {routes.map((route) => <HeaderItem
+                key={route.linkLabel}
+                linkTo={route.linkTo}
+                label={route.linkLabel}
+              />)}
             </div>
           </div>
 
@@ -43,6 +51,7 @@ class App extends Component {
           <Route path="/quizes" component={Quizes} />
           <Route path="/words-list" component={WordLists} />
           <Route path="/word-list" component={WordList} />
+          <Route path="/zigbangroomlist" component={ZigbangRoomList} />
         </div>
       </BrowserRouter>
     );
