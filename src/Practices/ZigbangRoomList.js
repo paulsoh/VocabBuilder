@@ -77,9 +77,29 @@ export default class ZigbangRoomList extends React.Component {
   }
 
   render() {
-    let answerOne;
-    let answerTwo;
-    let answerThree;
+    let answerOne = 0;
+
+    this.state.roomList.forEach((room) => {
+      if (room.item.deposit > answerOne) {
+        answerOne = room.item.deposit;
+      }
+    })
+
+    const answerTwo = this.state.roomList.filter((room) => {
+      if (room.item.agent_no === 26002) return true;
+      return false;
+    }).length
+
+    const answerThree = this.state.roomList
+      .map(room => {
+        return room.item.view_count;
+      })
+      .reduce((room1, room2) => {
+        return room1 + room2;
+      })
+
+
+    console.log(this.state.roomList);
 
     console.log(`가장 보증금이 비싼 방의 주소는: ${answerOne}`);
     console.log(`agent_no가 26002인 사람이 올린 매물(방)의 개수: ${answerTwo}`);
