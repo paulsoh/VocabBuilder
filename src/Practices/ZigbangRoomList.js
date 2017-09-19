@@ -21,12 +21,19 @@ export default class ZigbangRoomList extends React.Component {
       isLoading: true,
       roomList: [],
       appliedFilter: 'rent', // 'deposit'
+      sortOrder: 'asc', // 'desc'
     }
   }
 
   changeAppliedFilter = (filterType) => {
     this.setState({
       appliedFilter: filterType,
+    })
+  }
+
+  toggleSortOrder = () => {
+    this.setState({
+      sortOrder: this.state.sortOrder === 'asc' ? 'desc' : 'asc',
     })
   }
 
@@ -41,6 +48,11 @@ export default class ZigbangRoomList extends React.Component {
           roomList: sortBy(this.state.roomList, (room) => room.item.deposit).reverse(),
         })
       }
+    }
+    if (prevState.sortOrder !== this.state.sortOrder) {
+      this.setState({
+        roomList: this.state.roomList.reverse(),
+      })
     }
   }
 
@@ -88,6 +100,13 @@ export default class ZigbangRoomList extends React.Component {
         >
           <i className="chevron down icon"></i>
           월세 순으로 정렬
+        </button>
+        <button
+          className="ui right labeled icon button"
+          onClick={() => this.toggleSortOrder()}
+        >
+          <i className="chevron down icon"></i>
+          {this.state.sortOrder === 'asc' ? '내림차순으로 정렬' : '오름차순으로 정렬'}
         </button>
 
         <div className="ui hidden divider" />
