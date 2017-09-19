@@ -19,7 +19,7 @@ export default class ZigbangRoomList extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      roomList: [],
+      roomList: zigbangData.items,
       appliedFilter: 'rent', // 'deposit'
       sortOrder: 'asc', // 'desc'
     }
@@ -57,6 +57,7 @@ export default class ZigbangRoomList extends React.Component {
   }
 
   componentDidMount = () => {
+    /*
     fakeAPIResponsePromise(0)
       .then((data) => {
         console.log('API fetch has succeeded!');
@@ -72,6 +73,7 @@ export default class ZigbangRoomList extends React.Component {
           isLoading: false,
         })
       })
+      */
   }
 
   render() {
