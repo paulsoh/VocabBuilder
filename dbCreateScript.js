@@ -26,6 +26,7 @@ _.range(1, 100).forEach((index) => {
             wordListId: index,
             word: faker.random.word(),
             definition: faker.lorem.sentence(),
+            example: faker.lorem.sentence(),
         })
     })
 })
