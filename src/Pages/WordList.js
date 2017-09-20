@@ -2,6 +2,16 @@ import React from 'react'
 
 
 export default class WordList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount = () => {
+    // 나는 일단 마운팅이 됐고 요청을 보내서 응답을 받을 생각인데
+    // 몇번 째 id로 호출을 해야되지?
+    console.log(this.props.match.params)
+  }
+
   render() {
     return (
       <div className="ui container">

@@ -50,7 +50,7 @@ class App extends Component {
           <Route path="/quiz-session" component={QuizSession} />
           <Route path="/quizes" component={Quizes} />
           <Route path="/word-lists" component={WordLists} />
-          <Route path="/word-list" component={WordList} />
+          <Route path="/word-list/:wordListId" component={WordList} />
           <Route path="/zigbangroomlist" component={ZigbangRoomList} />
         </div>
       </BrowserRouter>
