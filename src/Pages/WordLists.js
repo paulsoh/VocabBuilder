@@ -53,7 +53,10 @@ export default class WordLists extends React.Component {
 
         <div className="ui cards">
           {this.state.wordLists.map((list) => (
-            <div className="card">
+            <div
+              className="card"
+              key={list.id}
+            >
               <div className="content">
                 <div className="header">
                   {list.title}
