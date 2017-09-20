@@ -9,6 +9,7 @@ export default class WordLists extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
+      isInputState: false,
       errorState: false,
       wordLists: [],
     }
@@ -31,6 +32,10 @@ export default class WordLists extends React.Component {
       })
   }
 
+  toggleInputState = () => this.setState({
+    isInputState: !this.state.isInputState,
+  })
+
   render() {
     if (this.state.errorState) {
       return (
@@ -46,14 +51,83 @@ export default class WordLists extends React.Component {
       return null
     }
 
+    const renderInputCard = () => {
+      if (this.state.isInputState) {
+        return (
+          <div className="card">
+            <div className="content">
+              <div className="header">Create New List</div>
+              <div className="description">
+                <div className="ui form">
+                  <div className="field">
+                    <label>단어장 이름</label>
+                    <input
+                      type="text"
+                      placeholder="단어장 이름을 입력하세요"
+                    />
+                  </div>
+                  <div className="field">
+                    <label>설명</label>
+                    <input
+                      type="text"
+                      placeholder="단어장 설명을 입력하세요"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="extra content">
+              <div className="ui two buttons">
+                <div
+                  className="ui basic red button"
+                  onClick={() => this.toggleInputState()}
+                >
+                  <i className="cross icon"></i>
+                  취소
+                </div>
+                <div
+                  className="ui basic green  button"
+                  onClick={() => this.toggleInputState()}
+                >
+                  <i className="add icon"></i>
+                  추가
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      } else {
+        return (
+          <div className="card">
+            <div className="content">
+              <div className="header">Create New List</div>
+              <div className="description">
+              </div>
+            </div>
+            <div
+              className="ui bottom attached button"
+              onClick={() => this.toggleInputState()}
+            >
+              <i className="add icon"></i>
+              Make New List
+            </div>
+          </div>
+        )
+      }
+    }
+
     return (
       <div className="ui container">
         <div className="ui large header">Words List</div>
         <div className="ui divider hidden"></div>
 
         <div className="ui cards">
+          {renderInputCard()}
           {this.state.wordLists.map((list) => (
-            <div className="card">
+            <div
+              className="card"
+              key={list.id}
+            >
               <div className="content">
                 <div className="header">
                   {list.title}
@@ -72,17 +146,6 @@ export default class WordLists extends React.Component {
               </Link>
             </div>
           ))}
-          <div className="card">
-            <div className="content">
-              <div className="header">Create New List</div>
-              <div className="description">
-              </div>
-            </div>
-            <div className="ui bottom attached button">
-              <i className="add icon"></i>
-              Make New List
-            </div>
-          </div>
         </div>
       </div>
     );
