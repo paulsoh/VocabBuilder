@@ -54,62 +54,29 @@ export default class WordLists extends React.Component {
     const renderInputCard = () => {
       if (this.state.isInputState) {
         return (
-          <div className="card">
-            <div className="content">
-              <div className="header">Create New List</div>
-              <div className="description">
-                <div className="ui form">
-                  <div className="field">
-                    <label>단어장 이름</label>
-                    <input
-                      type="text"
-                      placeholder="단어장 이름을 입력하세요"
-                    />
-                  </div>
-                  <div className="field">
-                    <label>설명</label>
-                    <input
-                      type="text"
-                      placeholder="단어장 설명을 입력하세요"
-                    />
-                  </div>
-                </div>
-              </div>
+          <form className="ui form segment">
+            <div className="field">
+              <label>단어장 이름</label>
+              <input type="text" name="first-name" placeholder="First Name" />
             </div>
-            <div className="extra content">
-              <div className="ui two buttons">
-                <div
-                  className="ui basic red button"
-                  onClick={() => this.toggleInputState()}
-                >
-                  <i className="cross icon"></i>
-                  취소
-                </div>
-                <div
-                  className="ui basic green  button"
-                  onClick={() => this.toggleInputState()}
-                >
-                  <i className="add icon"></i>
-                  추가
-                </div>
-              </div>
+            <div className="field">
+              <label>단어장 설명</label>
+              <input type="text" name="last-name" placeholder="Last Name" />
             </div>
-          </div>
+            <button className="ui gray button" type="cancel">취소</button>
+            <button className="ui blue button" type="submit">추가</button>
+          </form>
         )
       } else {
         return (
           <div className="card">
-            <div className="content">
-              <div className="header">Create New List</div>
-              <div className="description">
-              </div>
-            </div>
+            <div className="ui divider hidden"></div>
             <div
               className="ui bottom attached button"
               onClick={() => this.toggleInputState()}
             >
               <i className="add icon"></i>
-              Make New List
+              새로운 단어장 만들기
             </div>
           </div>
         )
@@ -120,30 +87,35 @@ export default class WordLists extends React.Component {
       <div className="ui container">
         <div className="ui large header">Words List</div>
         <div className="ui divider hidden"></div>
+        {renderInputCard()}
+        <div className="ui divider hidden"></div>
 
-        <div className="ui cards">
-          {renderInputCard()}
+        <div className="ui three column grid">
           {this.state.wordLists.map((list) => (
             <div
-              className="card"
+              className="column"
               key={list.id}
             >
-              <div className="content">
-                <div className="header">
-                  {list.title}
+              <div className="ui fluid card">
+                <div className="content">
+                  <div className="header">
+                    {list.title}
+                  </div>
+                  <div
+                    className="description"
+                  >
+                    {list.description}
+                  </div>
                 </div>
-                <div className="description">
-                  {list.description}
-                </div>
+                <Link to={`/word-list/${list.id}`}>
+                  <div
+                    className="ui bottom attached button"
+                  >
+                    <i className="add icon"></i>
+                    View Word List
+                  </div>
+                </Link>
               </div>
-              <Link to={`/word-list/${list.id}`}>
-                <div
-                  className="ui bottom attached button"
-                >
-                  <i className="add icon"></i>
-                  View Word List
-                </div>
-              </Link>
             </div>
           ))}
         </div>
