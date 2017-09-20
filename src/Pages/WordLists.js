@@ -1,21 +1,50 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Loader from '../Components/Loader';
+import { SERVER_HOSTNAME } from '../config';
 
 
 export default class WordLists extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // 1. 우리의 View를 만들기 위해 어떤 것들을 state로 저장하면 좋을까요?
-      // 2. 어떤 Flag들이 필요할 수 있을까요? 요청중일때, 실패했을 때
+      isLoading: true,
+      errorState: false,
+      wordLists: [],
     }
   }
 
   componentDidMount = () => {
-    // Component가 마운트 되면 요청을 보내야겠죠?
+    fetch(`${SERVER_HOSTNAME}/wordLists`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        this.setState({
+          isLoading: false,
+          wordLists: data,
+        })
+      })
+      .catch((error) => {
+        this.setState({
+          isLoading: false,
+          errorState: true,
+        })
+      })
   }
 
   render() {
-    // 예외 처리 챙겨서 해주세요
+    if (this.state.errorState) {
+      return (
+        <h1>
+          네트워크 요청 중 에러가 발생했습니다!
+        </h1>
+      )
+    }
+    if (this.state.isLoading) {
+      return <Loader />
+    }
+    if (!this.state.wordLists.length) {
+      return null
+    }
 
     return (
       <div className="ui container">
@@ -23,56 +52,26 @@ export default class WordLists extends React.Component {
         <div className="ui divider hidden"></div>
 
         <div className="ui cards">
-          <div className="card">
-            <div className="content">
-              <div className="header">TOEIC Words</div>
-              <div className="description">
-                1423 words
+          {this.state.wordLists.map((list) => (
+            <div className="card">
+              <div className="content">
+                <div className="header">
+                  {list.title}
+                </div>
+                <div className="description">
+                  {list.description}
+                </div>
               </div>
+              <Link to={`/word-list/${list.id}`}>
+                <div
+                  className="ui bottom attached button"
+                >
+                  <i className="add icon"></i>
+                  View Word List
+                </div>
+              </Link>
             </div>
-            <div className="ui bottom attached button">
-              <i className="add icon"></i>
-              View Word List
-            </div>
-          </div>
-          <div className="card">
-            <div className="content">
-              <div className="header">TOEFL Words</div>
-              <div className="description">
-                852 words
-              </div>
-            </div>
-            <div className="ui bottom attached button">
-              <i className="add icon"></i>
-              View Word List
-            </div>
-          </div>
-          <div className="card">
-            <div className="content">
-              <div className="header">GRE Words</div>
-              <div className="description">
-                5342 words
-              </div>
-            </div>
-            <div className="ui bottom attached button">
-              <i className="add icon"></i>
-              View Word List
-            </div>
-          </div>
-
-          <div className="card">
-            <div className="content">
-              <div className="header">GMAT Words</div>
-              <div className="description">
-                342 words
-              </div>
-            </div>
-            <div className="ui bottom attached button">
-              <i className="add icon"></i>
-              View Word List
-            </div>
-          </div>
-
+          ))}
           <div className="card">
             <div className="content">
               <div className="header">Create New List</div>
