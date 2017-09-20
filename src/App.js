@@ -13,8 +13,8 @@ import ZigbangRoomList from './Practices/ZigbangRoomList';
 
 const routes = [
   {
-    linkLabel: 'Word Lists',
-    linkTo: '/word-list',
+    linkLabel: '단어장',
+    linkTo: '/word-lists',
   },
   {
     linkLabel: 'Take a Quiz',
@@ -49,7 +49,7 @@ class App extends Component {
           <div className="ui hidden divider"></div>
           <Route path="/quiz-session" component={QuizSession} />
           <Route path="/quizes" component={Quizes} />
-          <Route path="/words-list" component={WordLists} />
+          <Route path="/word-lists" component={WordLists} />
           <Route path="/word-list" component={WordList} />
           <Route path="/zigbangroomlist" component={ZigbangRoomList} />
         </div>

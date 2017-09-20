@@ -2,7 +2,21 @@ import React from 'react';
 
 
 export default class WordLists extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // 1. 우리의 View를 만들기 위해 어떤 것들을 state로 저장하면 좋을까요?
+      // 2. 어떤 Flag들이 필요할 수 있을까요? 요청중일때, 실패했을 때
+    }
+  }
+
+  componentDidMount = () => {
+    // Component가 마운트 되면 요청을 보내야겠죠?
+  }
+
   render() {
+    // 예외 처리 챙겨서 해주세요
+
     return (
       <div className="ui container">
         <div className="ui large header">Words List</div>
