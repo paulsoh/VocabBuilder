@@ -8,6 +8,7 @@ import WordLists from './Pages/WordLists';
 import WordList from './Pages/WordList';
 import Quizes from './Pages/Quizes';
 import QuizSession from './Pages/QuizSession';
+import HugeApp from './Pages/HugeApp';
 import HeaderItem from './Components/HeaderItem';
 import ZigbangRoomList from './Practices/ZigbangRoomList';
 
@@ -23,6 +24,10 @@ const routes = [
   {
     linkLabel: '직방 리스트',
     linkTo: '/zigbangroomlist',
+  },
+  {
+    linkLabel: '거대한 앱',
+    linkTo: '/hugeapp',
   },
 ]
 
@@ -52,6 +57,7 @@ class App extends Component {
           <Route path="/word-lists" component={WordLists} />
           <Route path="/word-list/:wordListId" component={WordList} />
           <Route path="/zigbangroomlist" component={ZigbangRoomList} />
+          <Route path="/hugeapp" component={HugeApp} />
         </div>
       </BrowserRouter>
     );
