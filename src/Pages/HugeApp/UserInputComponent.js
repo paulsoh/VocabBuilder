@@ -1,4 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import { changeColor } from '../../actions';
+
 
 const generateRandomRGB = () => {
   const randomR = Math.floor(Math.random() * 255)
@@ -23,10 +26,9 @@ const UserInputComponentStyle = {
 
 class UserInputComponent extends React.Component {
   render() {
-    console.log(generateRandomRGB());
     return (
       <div
-        onClick={() => console.log(generateRandomRGB())}
+        onClick={() => this.props.changeColor(generateRandomRGB())}
         style={UserInputComponentStyle}
       >
         <h1>
@@ -37,4 +39,8 @@ class UserInputComponent extends React.Component {
   }
 }
 
-export default UserInputComponent;
+const mapDispatchToProps = (dipatch) => ({
+  changeColor: (RGB) => dipatch(changeColor(RGB))
+})
+
+export default connect(null, { changeColor })(UserInputComponent);
