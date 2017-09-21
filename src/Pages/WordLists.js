@@ -8,10 +8,15 @@ export default class WordLists extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true,
+      isLoading: false,
       isInputState: false,
       errorState: false,
       wordLists: [],
+      // POST를 위한 state관리
+      title: '',
+      description: '',
+      // POST 요청읠 위한 FLAG
+      isPending: false,
     }
   }
 
@@ -21,7 +26,7 @@ export default class WordLists extends React.Component {
       .then((data) => {
         this.setState({
           isLoading: false,
-          wordLists: data,
+          wordLists: data.reverse(),
         })
       })
       .catch((error) => {
@@ -32,9 +37,71 @@ export default class WordLists extends React.Component {
       })
   }
 
-  toggleInputState = () => this.setState({
-    isInputState: !this.state.isInputState,
+  toggleInputState = () => {
+    this.setState({
+      isInputState: !this.state.isInputState,
+    })
+    this.clearInput();
+  }
+  
+  clearInput = () => this.setState({
+    title: '',
+    description: '',
   })
+
+  handleWordListDescriptionChange = (e) => {
+    console.log(e.target.value);
+    this.setState({
+      description: e.target.value,
+    })
+  }
+
+  handleWordListNameChange = (e) => {
+    console.log(e.target.value);
+    this.setState({
+      title: e.target.value,
+    })
+  }
+
+  isInputValid = () => {
+    return !(this.state.title && this.state.description)
+  }
+
+  onSubmit = () => {
+    this.setState({
+      isPending: true,
+    })
+    const requestBody = {};
+    requestBody['title'] = this.state.title;
+    requestBody['description'] = this.state.description;
+
+    fetch(`${SERVER_HOSTNAME}/wordLists`,
+    {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(requestBody)
+    })
+    .then((res) => res.json())
+    .then((result) => {
+      // this.toggleInputState();
+      this.setState({
+        isPending: false,
+        wordLists: [
+          result,          
+          ...this.state.wordLists,
+        ]
+      })
+    })
+    .catch((res) => { 
+      console.log(res)
+      this.setState({
+        isPending: false,
+      })
+    })
+  }
 
   render() {
     if (this.state.errorState) {
@@ -54,18 +121,41 @@ export default class WordLists extends React.Component {
     const renderInputCard = () => {
       if (this.state.isInputState) {
         return (
-          <form className="ui form segment">
+          <div className="ui form segment">
             <div className="field">
               <label>단어장 이름</label>
-              <input type="text" name="first-name" placeholder="First Name" />
+              <input
+                type="text"
+                name="first-name"
+                placeholder="First Name"
+                onChange={this.handleWordListNameChange}
+                value={this.state.title}
+              />
             </div>
             <div className="field">
               <label>단어장 설명</label>
-              <input type="text" name="last-name" placeholder="Last Name" />
+              <input
+                type="text"
+                name="last-name"
+                placeholder="Word list Description"
+                onChange={this.handleWordListDescriptionChange}
+                value={this.state.description}
+              />
             </div>
-            <button className="ui gray button" type="cancel">취소</button>
-            <button className="ui blue button" type="submit">추가</button>
-          </form>
+            <a
+              className="ui gray button"
+              onClick={this.toggleInputState}
+            >
+              취소
+            </a>
+            <button
+              className={`ui blue button ${this.state.isPending ? 'loading' : ''}`}
+              disabled={this.isInputValid() || this.state.isPending}
+              onClick={this.onSubmit}
+            >
+              추가
+            </button>
+          </div>
         )
       } else {
         return (
@@ -82,6 +172,8 @@ export default class WordLists extends React.Component {
         )
       }
     }
+
+
 
     return (
       <div className="ui container">
