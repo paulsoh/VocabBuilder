@@ -3,6 +3,10 @@ import {
   BrowserRouter,
   Route,
 } from 'react-router-dom';
+import {
+  Provider,
+} from 'react-redux';
+import store from './store';
 import 'semantic-ui/dist/semantic.css';
 import WordLists from './Pages/WordLists';
 import WordList from './Pages/WordList';
@@ -39,6 +43,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
+      <Provider store={store}>
         <div>
           <div className="ui attached stackable menu">
             <div className="ui container">
@@ -59,6 +64,7 @@ class App extends Component {
           <Route path="/zigbangroomlist" component={ZigbangRoomList} />
           <Route path="/hugeapp" component={HugeApp} />
         </div>
+        </Provider>
       </BrowserRouter>
     );
   }
