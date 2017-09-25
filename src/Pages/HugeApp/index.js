@@ -1,9 +1,8 @@
 import React from 'react';
 import ChildComponent from './ChildComponent';
 import {
-  connect,
+  connect
 } from 'react-redux';
-
 const hugeAppStyle = {
   backgroundColor: 'black',
   height: '100vh',
@@ -14,6 +13,13 @@ const hugeAppStyle = {
 }
 
 class HugeApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      decreaseFactor: 0.5,
+    };
+  }
+
   render = () => {
     return (
       <div
@@ -21,13 +27,13 @@ class HugeApp extends React.Component {
           ...hugeAppStyle,
         }}
       >
-        <h1 style={{ color: 'white' }}>
-          {this.props.headerText}
-        </h1>
-
         <ChildComponent
-          factor={0.5}
-          RGB={this.props.rootColor}
+          factor={this.state.decreaseFactor}
+          RGB={this.props.color}
+        />
+        <ChildComponent
+          factor={this.state.decreaseFactor + 0.2}
+          RGB={this.props.color}
         />
       </div>
     )
@@ -36,10 +42,13 @@ class HugeApp extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    rootColor: state.rootColor,
-    headerText: state.headerText,
+    color: state.colors.rootColor,
   }
 }
+const mapDispatchToProps = null;
 
-export default connect(mapStateToProps)(HugeApp);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HugeApp);
 

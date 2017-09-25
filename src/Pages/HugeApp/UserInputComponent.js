@@ -1,10 +1,9 @@
 import React from 'react'
 import {
-  connect,
+  connect
 } from 'react-redux';
 import {
-  changeColorAction,
-  changeHeaderText,
+  changeColorAction
 } from '../../action';
 
 const generateRandomRGB = () => {
@@ -32,37 +31,26 @@ class UserInputComponent extends React.Component {
   render() {
     console.log(generateRandomRGB());
     return (
-      <div>
-        <div>
-          <input
-            value={this.props.headerText}
-            onChange={(e) => this.props.changeHeaderText(e.target.value)}
-          />
-        </div>
-        <div
-          onClick={() => this.props.I_WANT_TO_CHANGE_COLOR()}
-          style={UserInputComponentStyle}
-        >
-          <h1>
-            CHANGE ROOT COLOR!
-          </h1>
-        </div>
+      <div
+        onClick={this.props.changeColor}
+        style={UserInputComponentStyle}
+      >
+        <h1>
+          CHANGE ROOT COLOR!
+        </h1>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    headerText: state.headerText,
-  }
-}
+const mapStateToProps = null;
 const mapDispatchToProps = (dispatch) => {
   return {
-    I_WANT_TO_CHANGE_COLOR: () => dispatch(changeColorAction(generateRandomRGB())),
-    changeHeaderText: (text) => dispatch(changeHeaderText(text))    
-  
+    changeColor: () => dispatch(changeColorAction(generateRandomRGB()))
   }
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserInputComponent);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserInputComponent);

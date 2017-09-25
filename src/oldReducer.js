@@ -1,13 +1,13 @@
 const DEFAULT_STATE = {
-    rootColor: [42, 133, 234],
-    wordList: [],
     headerText: 'This is the Header',
+    rootColor: [42, 133, 234],
 }
 
 const reducer = (
     state=DEFAULT_STATE,
     action
 ) => {
+
     if (action.type === 'CHANGE_COLOR') {
         return {
             ...state,

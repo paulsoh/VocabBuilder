@@ -3,10 +3,6 @@ import {
   BrowserRouter,
   Route,
 } from 'react-router-dom';
-import {
-  Provider,
-} from 'react-redux';
-import store from './store';
 import 'semantic-ui/dist/semantic.css';
 import WordLists from './Pages/WordLists';
 import WordList from './Pages/WordList';
@@ -15,6 +11,10 @@ import QuizSession from './Pages/QuizSession';
 import HugeApp from './Pages/HugeApp';
 import HeaderItem from './Components/HeaderItem';
 import ZigbangRoomList from './Practices/ZigbangRoomList';
+import {
+  Provider,
+} from 'react-redux';
+import store from './store';
 
 const routes = [
   {

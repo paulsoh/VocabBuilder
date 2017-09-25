@@ -2,16 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Loader from '../Components/Loader';
 import { SERVER_HOSTNAME } from '../config';
+import {
+  connect,
+} from 'react-redux';
+import {
+  getWordsListFromApi,
+} from '../action.js';
 
-
-export default class WordLists extends React.Component {
+class WordLists extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
       isInputState: false,
       errorState: false,
-      wordLists: [],
       // POST를 위한 state관리
       title: '',
       description: '',
@@ -21,20 +25,7 @@ export default class WordLists extends React.Component {
   }
 
   componentDidMount = () => {
-    fetch(`${SERVER_HOSTNAME}/wordLists`)
-      .then((resp) => resp.json())
-      .then((data) => {
-        this.setState({
-          isLoading: false,
-          wordLists: data.reverse(),
-        })
-      })
-      .catch((error) => {
-        this.setState({
-          isLoading: false,
-          errorState: true,
-        })
-      })
+      this.props.getWordsFromApi();
   }
 
   toggleInputState = () => {
@@ -114,7 +105,7 @@ export default class WordLists extends React.Component {
     if (this.state.isLoading) {
       return <Loader />
     }
-    if (!this.state.wordLists.length) {
+    if (!this.props.wordLists.length) {
       return null
     }
 
@@ -183,7 +174,7 @@ export default class WordLists extends React.Component {
         <div className="ui divider hidden"></div>
 
         <div className="ui three column grid">
-          {this.state.wordLists.map((list) => (
+          {this.props.wordLists.map((list) => (
             <div
               className="column"
               key={list.id}
@@ -216,3 +207,16 @@ export default class WordLists extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getWordsFromApi: () => dispatch(getWordsListFromApi()),
+  }
+};
+const mapStateToProps = (state) => ({
+  wordLists: state.words.wordsList,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WordLists)
