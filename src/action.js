@@ -1,10 +1,14 @@
 import { SERVER_HOSTNAME } from './config';
 
 export const changeColorAction = (RGB) => {
-    return {
-        type: 'CHANGE_COLOR',
-        payload: RGB,
-    }
+  if (!Array.isArray(RGB)) {
+    throw new Error('RGB 값이 유효하지 않습니다');
+  }
+
+  return {
+    type: 'CHANGE_COLOR',
+    payload: RGB,
+  }
 }
 
 export const getWordsListFromApi = () => {
