@@ -3,7 +3,7 @@ import {
   BrowserRouter,
   Route,
 } from 'react-router-dom';
-import 'semantic-ui/dist/semantic.css';
+import 'semantic-ui-css/semantic.css';
 import WordLists from './Pages/WordLists';
 import WordList from './Pages/WordList';
 import Quizes from './Pages/Quizes';
